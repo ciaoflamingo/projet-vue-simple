@@ -1,0 +1,63 @@
+
+
+<!DOCTYPE html>
+<html lang="Fr">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<head>
+	<title>WIS</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+<!-- Rendu "déclaratif" pour ajouter vue sur le fichier -->
+        <div id="app">
+                {{ message }}
+
+<!-- Ajout du bouton avec fonction de récupéreration des posts -->
+
+                <button type="button" class="btn btn-primary" @click="recupererpost">Primary</button> 
+
+<!-- Faire une boucle dans le html pour afficher nos posts -->
+                <div v-for="post in posts">
+                        <p> {{post.title.rendered}} </p>
+                </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+
+//rendu "déclaratif" pour ajouter vue sur le fichier
+        var app = new Vue({
+                el: '#app',
+                        data: {
+                                message: 'Hello Vue !',
+                                seen: true,
+                                posts:[],
+                                test: "Articles", 
+                        },
+//
+       
+//récupération de l'API
+        methods:{
+                recupererpost: function() {
+                        fetch('https://webandsun.com/wp-json/wp/v2/posts')
+                                .then(function(response) {
+                                        response.json()
+                                        .then(function(response){
+                                        console.log(response)
+                                        vm.posts = response
+// Créer une variable post et l'associer à la fonction response pour qu'ils soient associés à une variable
+                                        })
+                                })
+                        }
+                }
+        })
+//
+
+        </script>
+
+</body>
+</html>
